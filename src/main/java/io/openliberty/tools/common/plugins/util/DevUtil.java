@@ -474,14 +474,19 @@ public abstract class DevUtil {
                 @Override
                 public void run() {
                     try {
+                        error("1. Starting server");
                         serverTask.execute();
+                        error("2. Finished starting server");
                     } catch (RuntimeException e) {
+                        error("3. RuntimeException in starting server");
                         // If devStop is true server was stopped with Ctl-c, do not throw exception
                         if (devStop.get() == false) {
                             // If a runtime exception occurred in the server task, log and rethrow
                             error("An error occurred while starting the server: " + e.getMessage(), e);
                             throw e;
                         }
+                    } catch (Exception e) {
+                        error("4. Other Exception starting server");
                     }
                 }
 
